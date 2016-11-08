@@ -13,7 +13,9 @@ $serverlist = get-content "C:\temp\serverlist.txt"
 #Path to logfile
 $logfile = "C:\temp\mylogfile.txt"
 #Command to run on remote computer
+
 $command = "robocopy C:\temp\test1\ C:\temp\test2 *.*"
+
 
 
 
@@ -24,6 +26,7 @@ $command = "robocopy C:\temp\test1\ C:\temp\test2 *.*"
 
 $list = New-Object -TypeName "System.Text.StringBuilder"
 $list.AppendLine("ServerName"+ "`t" + "ProcessID" + "`t" + "ReturnCode" +[system.environment]::NewLine) 
+$command = "cmd.exe /C timeout /T 5 & " + $command
 
 ForEach ($server in $serverlist)
     {
@@ -80,11 +83,8 @@ ForEach ($server in $serverlist)
                         {
                         Return ($strcomputer + "`t" + $return.ProcessId + "`t" + $Returnobj.SourceEventArgs.NewEvent.ExitStatus + "`t" + $error[0].exception.Message)
                         }
-                                      
-                Else
-                    {
-                    Return ($strcomputer + "`t" + $return.ProcessId + "`t" + "Error creating process: " + "`t" + $error[0].exception.Message)
-                    }
+                                    
+                
                 }
             Else
                 {
